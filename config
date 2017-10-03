@@ -224,6 +224,17 @@ bindsym $mod+Shift+Print exec gnome-screenshot -i
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
 
+bindsym $mod+control+1 exec xrandr --output eDP-1 --brightness 1.20
+bindsym $mod+control+2 exec xrandr --output eDP-1 --brightness 1.00
+bindsym $mod+control+3 exec xrandr --output eDP-1 --brightness 0.90
+bindsym $mod+control+4 exec xrandr --output eDP-1 --brightness 0.85
+bindsym $mod+control+5 exec xrandr --output eDP-1 --brightness 0.80
+bindsym $mod+control+6 exec xrandr --output eDP-1 --brightness 0.75
+bindsym $mod+control+7 exec xrandr --output eDP-1 --brightness 0.70
+bindsym $mod+control+8 exec xrandr --output eDP-1 --brightness 0.65
+bindsym $mod+control+9 exec xrandr --output eDP-1 --brightness 0.65
+bindsym $mod+control+0 exec xrandr --output eDP-1 --brightness 0.20
+
 # volume
 bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 5%+ && pkill -RTMIN+1 i3blocks
 bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 5%- && pkill -RTMIN+1 i3blocks
