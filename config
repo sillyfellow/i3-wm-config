@@ -10,6 +10,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $mod2 Mod1
 set $control ~/.i3/workspace_controller.py
 set $rofi "rofi -show run -font 'snap 10' -color-normal '#000000,#ffffff,#222222,#44bbff,#ffffff' -color-window '#000000,#ffffff'"
 
@@ -287,3 +288,119 @@ client.focused			$white  $white  $dark    $dark
 client.unfocused		$dark   $dark   $white   $white
 client.focused_inactive	$dark   $dark   $white   $dark
 client.urgent			$orange $orange $dark    $white
+
+
+mode "mouse" {
+
+    # set your three speeds here
+
+    set $slow 2
+    set $medium 8
+    set $quick 32
+    set $fast 128
+    set $superfast 512
+
+    # Mouse movement (slow/fine-tuned) -- vim keybindings
+
+    bindsym h exec xdotool mousemove_relative -- -$slow 0
+    bindsym j exec xdotool mousemove_relative 0 $slow
+    bindsym k exec xdotool mousemove_relative -- 0 -$slow
+    bindsym l exec xdotool mousemove_relative $slow 0
+
+    # Mouse movement (slow/fine-tuned) -- arrow keys
+
+    bindsym Left exec xdotool mousemove_relative -- -$slow 0
+    bindsym Down exec xdotool mousemove_relative 0 $slow
+    bindsym Up exec xdotool mousemove_relative -- 0 -$slow
+    bindsym Right exec xdotool mousemove_relative $slow 0
+
+    # Mouse movement (mediumer) -- vim keybindings
+
+    bindsym Shift+h exec xdotool mousemove_relative -- -$medium 0
+    bindsym Shift+j exec xdotool mousemove_relative 0 $medium
+    bindsym Shift+k exec xdotool mousemove_relative -- 0 -$medium
+    bindsym Shift+l exec xdotool mousemove_relative $medium 0
+
+    # Mouse movement (mediumer) -- arrow keys
+
+    bindsym Shift+Left exec xdotool mousemove_relative -- -$medium 0
+    bindsym Shift+Down exec xdotool mousemove_relative 0 $medium
+    bindsym Shift+Up exec xdotool mousemove_relative -- 0 -$medium
+    bindsym Shift+Right exec xdotool mousemove_relative $medium 0
+
+    # Mouse movement (quick) -- vim keybindings
+
+    bindsym control+h exec xdotool mousemove_relative -- -$quick 0
+    bindsym control+j exec xdotool mousemove_relative 0 $quick
+    bindsym control+k exec xdotool mousemove_relative -- 0 -$quick
+    bindsym control+l exec xdotool mousemove_relative $quick 0
+
+    # Mouse movement (quick) -- arrow keys
+
+    bindsym control+Left exec xdotool mousemove_relative -- -$quick 0
+    bindsym control+Down exec xdotool mousemove_relative 0 $quick
+    bindsym control+Up exec xdotool mousemove_relative -- 0 -$quick
+    bindsym control+Right exec xdotool mousemove_relative $quick 0
+
+    # Mouse movement (fast) -- vim keybindings
+
+    bindsym Shift+control+h exec xdotool mousemove_relative -- -$fast 0
+    bindsym Shift+control+j exec xdotool mousemove_relative 0 $fast
+    bindsym Shift+control+k exec xdotool mousemove_relative -- 0 -$fast
+    bindsym Shift+control+l exec xdotool mousemove_relative $fast 0
+
+    # Mouse movement (fast) -- arrow keys
+
+    bindsym Shift+control+Left exec xdotool mousemove_relative -- -$fast 0
+    bindsym Shift+control+Down exec xdotool mousemove_relative 0 $fast
+    bindsym Shift+control+Up exec xdotool mousemove_relative -- 0 -$fast
+    bindsym Shift+control+Right exec xdotool mousemove_relative $fast 0
+
+    # Mouse movement (superfast) -- vim keybindings
+
+    bindsym Shift+$mod+control+h exec xdotool mousemove_relative -- -$superfast 0
+    bindsym Shift+$mod+control+j exec xdotool mousemove_relative 0 $superfast
+    bindsym Shift+$mod+control+k exec xdotool mousemove_relative -- 0 -$superfast
+    bindsym Shift+$mod+control+l exec xdotool mousemove_relative $superfast 0
+
+    # Mouse movement (superfast) -- arrow keys
+
+    bindsym Shift+$mod+control+Left exec xdotool mousemove_relative -- -$superfast 0
+    bindsym Shift+$mod+control+Down exec xdotool mousemove_relative 0 $superfast
+    bindsym Shift+$mod+control+Up exec xdotool mousemove_relative -- 0 -$superfast
+    bindsym Shift+$mod+control+Right exec xdotool mousemove_relative $superfast 0
+
+
+    # Left Click
+    bindsym f exec xdotool click 1
+
+    # Middle Click
+    bindsym d exec xdotool click 2
+
+    # Right Click
+    bindsym s exec xdotool click 3
+
+    # Left Click-and-drag
+    bindsym Shift+f exec xdotool mousedown 1
+
+    # Middle Click-and-drag
+    bindsym Shift+d exec xdotool mousedown 2
+
+    # Right Click-and-drag
+    bindsym Shift+s exec xdotool mousedown 3
+
+    # Left Drag release
+    bindsym control+f exec xdotool mouseup 1
+
+    # Middle Drag release
+    bindsym control+d exec xdotool mouseup 2
+
+    # Right Drag release
+    bindsym control+s exec xdotool mouseup 3
+
+
+    # return to normal keybindings -- IMPORTANT!!
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+control+Shift+m mode "mouse"
