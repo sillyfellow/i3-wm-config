@@ -259,6 +259,9 @@ bindsym $mod+Next exec curl http://localhost:2000/command/default/prev
 bindsym $mod+Prior exec curl http://localhost:2000/command/default/next
 # screen layout keys
 
+bindsym $mod+control+Shift+m exec xrandr -s 1920x1080
+bindsym $mod+control+Shift+h exec xrandr -s 2560x1440
+
 # startup programs
 # exec pulseaudio --start
 exec /home/sands/.i3/update_background
