@@ -42,6 +42,7 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Shift+c exec gnome-calculator
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -51,7 +52,7 @@ bindsym $mod+r exec $rofi
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-#bindsym $mod+Mod1+p exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+Mod1+r exec --no-startup-id i3-dmenu-desktop
 
 # dynamic tagging feature
 # bindsym $mod+t exec ~/.config/i3/get_workspace_options.py | dmenu -b | ~/.config/i3/go_to_workspace.py
@@ -65,12 +66,6 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
 # change focus with tab keys
 bindsym Mod1+Tab focus right
 bindsym Mod1+Shift+Tab focus left
@@ -80,6 +75,12 @@ bindsym $mod+Left exec $control prev go
 bindsym $mod+Right exec $control next go
 bindsym $mod+Up exec $control up go
 bindsym $mod+Down exec $control down go
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left exec $control prev move
@@ -94,7 +95,7 @@ bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
-bindsym $mod+g fullscreen global
+bindsym $mod+Shift+f fullscreen global
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -143,22 +144,8 @@ bindsym $mod+y move workspace to output left
 # move to last workspace
 bindsym $mod+z workspace back_and_forth
 
-# lock computer
-bindsym --release $mod+Control+Shift+l exec i3lock
-bindsym --release $mod+Control+Shift+s exec i3lock && systemctl suspend
-
-# toggle border
-bindsym $mod+b exec i3-msg border toggle
-
-# boder mode
-new_window 1pixel
-
 # new workspace layout mode
 workspace_layout default
-
-# gaps
-#gaps inner 20
-#gaps outer 20
 
 # reload the configuration file
 bindsym $mod+Shift+v reload
@@ -175,16 +162,16 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 3 px or 3 ppt
-        bindsym k resize grow height 3 px or 3 ppt
-        bindsym l resize shrink height 3 px or 3 ppt
-        bindsym semicolon resize grow width 3 px or 3 ppt
+        bindsym h resize shrink width 8 px or 8 ppt
+        bindsym j resize grow height 8 px or 8 ppt
+        bindsym k resize shrink height 8 px or 8 ppt
+        bindsym l resize grow width 8 px or 8 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 3 px or 3 ppt
-        bindsym Down resize grow height 3 px or 3 ppt
-        bindsym Up resize shrink height 3 px or 3 ppt
-        bindsym Right resize grow width 3 px or 3 ppt
+        bindsym Left resize shrink width 8 px or 8 ppt
+        bindsym Down resize grow height 8 px or 8 ppt
+        bindsym Up resize shrink height 8 px or 8 ppt
+        bindsym Right resize grow width 8 px or 8 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -196,12 +183,14 @@ bindsym $mod+p mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3blocks #-c /home/sands/.config/i3/i3blocks.conf
+        status_command i3blocks
         position bottom
         tray_output primary
         colors {
-                statusline	#999999
+                # Whole color settings
                 background	$black
+                statusline #ffffff
+                separator  #666666
 
                 # Colors            border      backgr.     text
                 focused_workspace	$white	 	$white		$black
@@ -211,48 +200,48 @@ bar {
         }
 }
 
-exec gnome-settings-daemon
-
-bindsym $mod+control+Down exec synclient TouchpadOff=1
-bindsym $mod+control+Up exec synclient TouchpadOff=0
-
-# Screenshot
-bindsym $mod+Print exec gnome-screenshot -ai
-bindsym $mod+Shift+Print exec gnome-screenshot -i
-
+# lock computer
+bindsym --release $mod+Control+Shift+l exec i3lock
+bindsym --release $mod+Control+Shift+s exec i3lock && systemctl suspend
 
 
 
 # other keys
 bindsym Print exec scrot '%Y-%m-%d_%T_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
 
-# media keys
+
 # Media volume controls
 bindsym $mod+Home   exec amixer sset 'Master' toggle
 bindsym $mod+Next   exec amixer sset 'Master' 5%-
 bindsym $mod+Prior  exec amixer sset 'Master' 5%+
+
+# Screenshot
+bindsym $mod+Print exec gnome-screenshot -ai
+bindsym $mod+Shift+Print exec gnome-screenshot -i
+
+# Start copyq
+exec copyq
 
 # screen layout keys
 bindsym $mod+control+Shift+m exec xrandr -s 1920x1080
 bindsym $mod+control+Shift+h exec xrandr -s 2560x1440
 
 # startup programs
-# exec pulseaudio --start
 exec /home/sands/.config/i3/update_background
-#exec --no-startup-id i3-msg 'workspace 0; exec geary'
-exec --no-startup-id i3-msg 'workspace 0; exec keepass'
-exec clipit
-exec CopyAgent
-#exec udiskie --tray
-#exec xflux -l -38.14 -g 144.35
+exec udiskie --tray
 exec xscreensaver -no-splash
-#exec conky
 exec pa-applet
 exec nm-applet
 exec megasync
 exec amixer sset Master 20%
 exec pasystray
-#exec --no-startup-id i3-msg 'workspace 1; exec google-chrome'
+
+# I want it fast
+exec xset r rate 250 60
+
+# God knows why
+exec gnome-settings-daemon
+
 #exec --no-startup-id compton -b --config /home/sands/.config/i3/compton.conf
 
 # open certain windows in floating mode
@@ -265,119 +254,3 @@ client.focused			$white  $white  $dark    $dark
 client.unfocused		$dark   $dark   $white   $white
 client.focused_inactive	$dark   $dark   $white   $dark
 client.urgent			$orange $orange $dark    $white
-
-
-#mode "mouse" {
-
-    ## set your three speeds here
-
-    #set $slow 2
-    #set $medium 8
-    #set $quick 32
-    #set $fast 128
-    #set $superfast 512
-
-    ## Mouse movement (slow/fine-tuned) -- vim keybindings
-
-    #bindsym h exec xdotool mousemove_relative -- -$slow 0
-    #bindsym j exec xdotool mousemove_relative 0 $slow
-    #bindsym k exec xdotool mousemove_relative -- 0 -$slow
-    #bindsym l exec xdotool mousemove_relative $slow 0
-
-    ## Mouse movement (slow/fine-tuned) -- arrow keys
-
-    #bindsym Left exec xdotool mousemove_relative -- -$slow 0
-    #bindsym Down exec xdotool mousemove_relative 0 $slow
-    #bindsym Up exec xdotool mousemove_relative -- 0 -$slow
-    #bindsym Right exec xdotool mousemove_relative $slow 0
-
-    ## Mouse movement (mediumer) -- vim keybindings
-
-    #bindsym Shift+h exec xdotool mousemove_relative -- -$medium 0
-    #bindsym Shift+j exec xdotool mousemove_relative 0 $medium
-    #bindsym Shift+k exec xdotool mousemove_relative -- 0 -$medium
-    #bindsym Shift+l exec xdotool mousemove_relative $medium 0
-
-    ## Mouse movement (mediumer) -- arrow keys
-
-    #bindsym Shift+Left exec xdotool mousemove_relative -- -$medium 0
-    #bindsym Shift+Down exec xdotool mousemove_relative 0 $medium
-    #bindsym Shift+Up exec xdotool mousemove_relative -- 0 -$medium
-    #bindsym Shift+Right exec xdotool mousemove_relative $medium 0
-
-    ## Mouse movement (quick) -- vim keybindings
-
-    #bindsym control+h exec xdotool mousemove_relative -- -$quick 0
-    #bindsym control+j exec xdotool mousemove_relative 0 $quick
-    #bindsym control+k exec xdotool mousemove_relative -- 0 -$quick
-    #bindsym control+l exec xdotool mousemove_relative $quick 0
-
-    ## Mouse movement (quick) -- arrow keys
-
-    #bindsym control+Left exec xdotool mousemove_relative -- -$quick 0
-    #bindsym control+Down exec xdotool mousemove_relative 0 $quick
-    #bindsym control+Up exec xdotool mousemove_relative -- 0 -$quick
-    #bindsym control+Right exec xdotool mousemove_relative $quick 0
-
-    ## Mouse movement (fast) -- vim keybindings
-
-    #bindsym Shift+control+h exec xdotool mousemove_relative -- -$fast 0
-    #bindsym Shift+control+j exec xdotool mousemove_relative 0 $fast
-    #bindsym Shift+control+k exec xdotool mousemove_relative -- 0 -$fast
-    #bindsym Shift+control+l exec xdotool mousemove_relative $fast 0
-
-    ## Mouse movement (fast) -- arrow keys
-
-    #bindsym Shift+control+Left exec xdotool mousemove_relative -- -$fast 0
-    #bindsym Shift+control+Down exec xdotool mousemove_relative 0 $fast
-    #bindsym Shift+control+Up exec xdotool mousemove_relative -- 0 -$fast
-    #bindsym Shift+control+Right exec xdotool mousemove_relative $fast 0
-
-    ## Mouse movement (superfast) -- vim keybindings
-
-    #bindsym Shift+$mod+control+h exec xdotool mousemove_relative -- -$superfast 0
-    #bindsym Shift+$mod+control+j exec xdotool mousemove_relative 0 $superfast
-    #bindsym Shift+$mod+control+k exec xdotool mousemove_relative -- 0 -$superfast
-    #bindsym Shift+$mod+control+l exec xdotool mousemove_relative $superfast 0
-
-    ## Mouse movement (superfast) -- arrow keys
-
-    #bindsym Shift+$mod+control+Left exec xdotool mousemove_relative -- -$superfast 0
-    #bindsym Shift+$mod+control+Down exec xdotool mousemove_relative 0 $superfast
-    #bindsym Shift+$mod+control+Up exec xdotool mousemove_relative -- 0 -$superfast
-    #bindsym Shift+$mod+control+Right exec xdotool mousemove_relative $superfast 0
-
-
-    ## Left Click
-    #bindsym f exec xdotool click 1
-
-    ## Middle Click
-    #bindsym d exec xdotool click 2
-
-    ## Right Click
-    #bindsym s exec xdotool click 3
-
-    ## Left Click-and-drag
-    #bindsym Shift+f exec xdotool mousedown 1
-
-    ## Middle Click-and-drag
-    #bindsym Shift+d exec xdotool mousedown 2
-
-    ## Right Click-and-drag
-    #bindsym Shift+s exec xdotool mousedown 3
-
-    ## Left Drag release
-    #bindsym control+f exec xdotool mouseup 1
-
-    ## Middle Drag release
-    #bindsym control+d exec xdotool mouseup 2
-
-    ## Right Drag release
-    #bindsym control+s exec xdotool mouseup 3
-
-
-    ## return to normal keybindings -- IMPORTANT!!
-    #bindsym Escape mode "default"
-#}
-
-#bindsym $mod+control+Shift+m mode "mouse"

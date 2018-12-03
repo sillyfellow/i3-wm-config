@@ -32,6 +32,9 @@ def move_to(num):
 def go_to(num):
   subprocess.Popen(["i3-msg","workspace "+str(num)], stdout=subprocess.PIPE)
 
+def rename_to(num):
+    subprocess.Popen(["i3-msg","rename workspace " + get_workspace() + " to " + str(num)], stdout=subprocess.PIPE)
+
 def dmenu_fetch(inputstr):
   t = TemporaryFile()
   t.write(bytes(inputstr, 'UTF-8'))
@@ -109,6 +112,9 @@ else:
       go_to(result)
     elif command2 == 'move':
       move_to(result)
+  elif command == 'rename':
+    result = dmenu_fetch('\n')
+    rename_to(result)
 
   if len(sys.argv) == 3:
     # not a go or move, command2 is argv2
