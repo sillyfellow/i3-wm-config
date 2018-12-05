@@ -70,9 +70,12 @@ bindsym $mod+l focus right
 bindsym Mod1+Tab focus right
 bindsym Mod1+Shift+Tab focus left
 
+# change focus to prev/next (even if they don't exist)
+bindsym $mod+n exec $control prev go
+bindsym $mod+Shift+n exec $control next go
 # alternatively, you can use the cursor keys:
-bindsym $mod+Left exec $control prev go
-bindsym $mod+Right exec $control next go
+bindsym $mod+Left workspace prev
+bindsym $mod+Right workspace next
 bindsym $mod+Up exec $control up go
 bindsym $mod+Down exec $control down go
 
@@ -219,9 +222,6 @@ bindsym $mod+Prior  exec amixer sset 'Master' 5%+
 bindsym $mod+Print exec gnome-screenshot -ai
 bindsym $mod+Shift+Print exec gnome-screenshot -i
 
-# Start copyq
-exec copyq
-
 # screen layout keys
 bindsym $mod+control+Shift+m exec xrandr -s 1920x1080
 bindsym $mod+control+Shift+h exec xrandr -s 2560x1440
@@ -235,6 +235,7 @@ exec nm-applet
 exec megasync
 exec amixer sset Master 20%
 exec pasystray
+exec --no-startup-id copyq
 
 # I want it fast
 exec xset r rate 250 60
@@ -242,10 +243,13 @@ exec xset r rate 250 60
 # God knows why
 exec gnome-settings-daemon
 
+bindsym control+Shift+v exec copyq toggle
+
 #exec --no-startup-id compton -b --config /home/sands/.config/i3/compton.conf
 
 # open certain windows in floating mode
 for_window [class="(?i)gnome-calculator"] floating enable
+for_window [class="(?i)copyq"] floating enable
 for_window [class="(?i)lighthouse"] floating enable
 for_window [window_role="(?i)pop-up"] floating enable
 
