@@ -16,21 +16,22 @@ set $rofi "rofi -show run -font 'snap 10' -color-normal '#000000,#ffffff,#222222
 
 
 # Hybrid colors
-set $black	#002B36
-set $white	#839496
-set $gray	#CCCCCC
-set $darkgray	#666666
-set $green 	#799F26
-set $blue	#4D73AA
-set $purple	#8473A7
-set $red	#B58900
-set $orange	#E59847
-set $cyan	#2AA198
-set $dark	#00252E
+set $black    #002B36
+set $white    #839496
+set $gray     #CCCCCC
+set $darkgray #666666
+set $green    #799F26
+set $blue     #4D73AA
+set $purple   #8473A7
+set $red      #B58900
+set $orange   #E59847
+set $cyan     #2AA198
+set $dark     #00252E
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
-font pango:Ubuntu, Light 11
+font pango:Ubuntu, Light 12
+
 # The font above is very space-efficient, that is, it looks good, sharp and
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
@@ -52,7 +53,9 @@ bindsym $mod+r exec $rofi
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+Mod1+r exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+x exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -show -matching fuzzy -i -dmenu'
+
+floating_modifier $mod
 
 # dynamic tagging feature
 # bindsym $mod+t exec ~/.config/i3/get_workspace_options.py | dmenu -b | ~/.config/i3/go_to_workspace.py
@@ -141,6 +144,18 @@ bindsym $mod+Shift+8 exec $control move 8
 bindsym $mod+Shift+9 exec $control move 9
 bindsym $mod+Shift+0 exec $control move 0
 
+### Media Player ###
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioNext exec playerctl next
+
+# Raise Volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+ && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+# Lower Volume
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%- && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+bindsym XF86AudioMute exec --no-startup-id amixer -D pulse sset Master toggle-mute # Toggle muting
+
 # move workspace between outputs
 bindsym $mod+y move workspace to output left
 
@@ -171,10 +186,10 @@ mode "resize" {
         bindsym l resize grow width 8 px or 8 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 8 px or 8 ppt
-        bindsym Down resize grow height 8 px or 8 ppt
-        bindsym Up resize shrink height 8 px or 8 ppt
-        bindsym Right resize grow width 8 px or 8 ppt
+        bindsym Left resize shrink width 16 px or 16 ppt
+        bindsym Down resize grow height 16 px or 16 ppt
+        bindsym Up resize shrink height 16 px or 16 ppt
+        bindsym Right resize grow width 16 px or 16 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -211,7 +226,7 @@ bindsym --release $mod+Control+Shift+l exec i3lock -i ~/.config/i3/lock_screen_w
 
 # other keys
 bindsym Print exec scrot '%Y-%m-%d_%T_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
-bindsym $mod+n exec nautilus ~/ &
+bindsym $mod+n exec caja ~/ &
 
 
 # Media volume controls
@@ -227,6 +242,34 @@ bindsym $mod+Shift+Print exec gnome-screenshot -i
 bindsym $mod+control+Shift+m exec xrandr -s 1920x1080
 bindsym $mod+control+Shift+h exec xrandr -s 2560x1440
 
+# I want it fast
+exec xset r rate 250 60
+
+# God knows why
+exec gnome-settings-daemon
+
+bindsym control+Shift+v exec copyq toggle
+bindsym control+Shift+m exec copyq menu
+
+#exec --no-startup-id compton -b --config /home/sands/.config/i3/compton.conf
+
+# open certain windows in floating mode
+for_window [class="(?i)gnome-calculator"] floating enable
+for_window [class="(?i)copyq"] floating enable
+for_window [class="(?i)lighthouse"] floating enable
+for_window [window_role="(?i)pop-up"] floating enable
+
+
+for_window [class="Firefox"] move workspace 1
+for_window [class="Slack"] move workspace 9
+for_window [class="Skype"] move workspace 9
+
+#class                  border  backgr. text    indicator
+client.focused			$white  $white  $dark    $dark
+client.unfocused		$dark   $dark   $white   $white
+client.focused_inactive	$dark   $dark   $white   $dark
+client.urgent			$orange $orange $dark    $white
+
 # startup programs
 exec /home/sands/.config/i3/update_background
 exec udiskie --tray
@@ -237,25 +280,11 @@ exec megasync
 exec amixer sset Master 20%
 exec pasystray
 exec --no-startup-id copyq
-
-# I want it fast
-exec xset r rate 250 60
-
-# God knows why
-exec gnome-settings-daemon
-
-bindsym control+Shift+v exec copyq toggle
-
-#exec --no-startup-id compton -b --config /home/sands/.config/i3/compton.conf
-
-# open certain windows in floating mode
-for_window [class="(?i)gnome-calculator"] floating enable
-for_window [class="(?i)copyq"] floating enable
-for_window [class="(?i)lighthouse"] floating enable
-for_window [window_role="(?i)pop-up"] floating enable
-
-#class                  border  backgr. text    indicator
-client.focused			$white  $white  $dark    $dark
-client.unfocused		$dark   $dark   $white   $white
-client.focused_inactive	$dark   $dark   $white   $dark
-client.urgent			$orange $orange $dark    $white
+exec --no-startup-id albert
+exec --no-startup-id /home/sillyfellow/.config/i3/natural_scrolling.sh
+exec /usr/bin/firefox
+exec slack
+exec skypeforlinux
+exec --no-startup-id xfce4-power-manager
+exec --no-startup-id xfce4-panel --disable-wm-check
+exec --no-startup-id xfce4-power-manager
