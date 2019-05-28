@@ -237,6 +237,8 @@ bindsym $mod+Prior  exec amixer sset 'Master' 5%+
 # Screenshot
 bindsym $mod+Print exec gnome-screenshot -ai
 bindsym $mod+Shift+Print exec gnome-screenshot -i
+bindsym control+shift+5 --release exec "scrot -s /tmp/screenshot-$(date +%F_%T).png -e 'xclip -selection c -t image/png < $f'"
+bindsym control+shift+4 exec "scrot /tmp/screenshot-$(date +%F_%T).png -e 'xclip -selection c -t image/png < $f'"
 
 # screen layout keys
 bindsym $mod+control+Shift+m exec xrandr -s 1920x1080
@@ -263,6 +265,7 @@ for_window [window_role="(?i)pop-up"] floating enable
 for_window [class="Firefox"] move workspace 1
 for_window [class="Slack"] move workspace 9
 for_window [class="Skype"] move workspace 9
+for_window [class="Postman"] move workspace 7
 
 #class                  border  backgr. text    indicator
 client.focused			$white  $white  $dark    $dark
@@ -283,8 +286,7 @@ exec --no-startup-id copyq
 exec --no-startup-id albert
 exec --no-startup-id /home/sillyfellow/.config/i3/natural_scrolling.sh
 exec /usr/bin/firefox
+exec /opt/Postman/Postman
 exec slack
 exec skypeforlinux
-exec --no-startup-id xfce4-power-manager
-exec --no-startup-id xfce4-panel --disable-wm-check
 exec --no-startup-id xfce4-power-manager
